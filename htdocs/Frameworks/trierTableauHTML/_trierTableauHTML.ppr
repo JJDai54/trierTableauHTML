@@ -1,0 +1,88 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+DefaultDir=J:\Xoops\modules-JJD\trierTableauHTML\Projet\htdocs\Frameworks\trierTableauHTML
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+_trierTableauHTML
+	+trierTableauHTML
+		-images
+			-chiffres_Garamond
+				images\chiffres_Garamond\chiffre_0.gif
+				images\chiffres_Garamond\chiffre_1.gif
+				images\chiffres_Garamond\chiffre_2.gif
+				images\chiffres_Garamond\chiffre_3.gif
+				images\chiffres_Garamond\chiffre_4.gif
+				images\chiffres_Garamond\chiffre_5.gif
+				images\chiffres_Garamond\chiffre_6.gif
+				images\chiffres_Garamond\chiffre_7.gif
+				images\chiffres_Garamond\chiffre_8.gif
+				images\chiffres_Garamond\chiffre_9.gif
+				images\chiffres_Garamond\index.html
+			-skin-arrow-blue-02
+				images\skin-arrow-blue-02\blank.png
+				images\skin-arrow-blue-02\down_off.png
+				images\skin-arrow-blue-02\down_on.png
+				images\skin-arrow-blue-02\index.html
+				images\skin-arrow-blue-02\up_off.png
+				images\skin-arrow-blue-02\up_on.png
+			-skin-arrow-blue-round
+				images\skin-arrow-blue-round\blank.png
+				images\skin-arrow-blue-round\down_off.png
+				images\skin-arrow-blue-round\down_on.png
+				images\skin-arrow-blue-round\index.html
+				images\skin-arrow-blue-round\up_off.png
+				images\skin-arrow-blue-round\up_on.png
+			-skin-arrow-green
+				images\skin-arrow-green\blank.png
+				images\skin-arrow-green\down_off.png
+				images\skin-arrow-green\down_on.png
+				images\skin-arrow-green\index.html
+				images\skin-arrow-green\up_off.png
+				images\skin-arrow-green\up_on.png
+			-skin-arrow-red-02
+				images\skin-arrow-red-02\blank.png
+				images\skin-arrow-red-02\down_off.png
+				images\skin-arrow-red-02\down_on.png
+				images\skin-arrow-red-02\index.html
+				images\skin-arrow-red-02\up_off.png
+				images\skin-arrow-red-02\up_on.png
+			-skin-triangle-blue
+				images\skin-triangle-blue\blank.gif
+				images\skin-triangle-blue\down_off.gif
+				images\skin-triangle-blue\down_on.gif
+				images\skin-triangle-blue\index.html
+				images\skin-triangle-blue\up_down.gif
+				images\skin-triangle-blue\up_on.gif
+			-skin-triangle-green
+				images\skin-triangle-green\blank.gif
+				images\skin-triangle-green\down_off.gif
+				images\skin-triangle-green\down_on.gif
+				images\skin-triangle-green\index.html
+				images\skin-triangle-green\up_down.gif
+				images\skin-triangle-green\up_on.gif
+		help.txt
+		index.html
+		trierTableau.js
+[Open project files]
+0=trierTableau.js
+1=help.txt
+[Selected Project Files]
+Main=
+Selected=help.txt
+[trierTableau.js]
+TopLine=105
+Caret=1,133
+[help.txt]
+TopLine=27
+Caret=8,79

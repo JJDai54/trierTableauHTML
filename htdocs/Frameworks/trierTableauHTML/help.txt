@@ -7,35 +7,42 @@ Utilisation :
 Ajouter le script dans la page html
 $xoTheme->addScript(XOOPS_URL . '/Frameworks/trierTableauHTML/trierTableau.js');
 
-à la fin du tableau HTML insérer le code suivant:
+à la fin du tableau HTML ajouter un appel à la fonction "trierTableau".
+exemple : 
+---------------------------------------------
 <script>
 trierTableau('slides_list', 2, '1|2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
 </script>
+---------------------------------------------
+prototype de la fontion:
+function trierTableau(idTbl, [defautCol2sort = 0], [cols2sort = ""], [sRoot = ""]){}
 
-ou :
-parametre idTbl : slides_list est l'id du tableau html
+idTbl : slides_list est l'id du tableau html
 
-parametre defautCol2sort : 2 : la colonne de tri par défaut.
+defautCol2sort : indique la colonne de tri (défaut : 0).
+     la première conone est la n° 1
      Mettre 0 pour garder le tri initial
 
-parametre cols2sort : '1|2|3|4|8|9' : Liste des colonnes ou l'on pourra trier. 
+cols2sort : Liste des colonnes ou l'on pourra trier. 
      une chaine vide mettra toute les colonnes triables
      la premère colonne est la n° 1
      Separateurs utilisables : | - , ; /
 
-parametre sRoot : '<{$smarty.const.XOOPS_URL}>/Frameworks' : chemin URL ou se trouve le framework.
+sRoot : chemin URL ou se trouve le framework.
+     laisser vide pour Xoops
+     par defaut http://monsite/Frameworks
      utilisé par les images ajoutées au titre des colonnes.
 
-prototype de la fontion:
-function trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = ""){}
 
             
-il es possible d'initialiser certaines option en ajoutant la ligne suivante avnt l'appel a trierTableau
-
+il es possible d'initialiser certaines option en ajoutant un appel à la fonction "init_TrierTableauHTML" avant l'appel a trierTableau
+exemple :
+---------------------------------------------
 <script>
 init_TrierTableauHTML({ "posImg" : 'left', "skin" : 'skin-arrow-green', "asc" : false});
 trierTableau('slides_list', 2, '1|2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
 </script>
+---------------------------------------------
 
 liste des options possibles à passer dans le tableau
 ------------------------------------------------------
@@ -44,12 +51,13 @@ liste des options possibles à passer dans le tableau
 "asc"       : bollean, indique le sens de tri par défaut;
 'localLang' : valeur par défaut = "fr". Défini le type de tri pour les chaine et les dates.
 
+
 Astuces :
 -------------------
-Pour les colones qui affiche un icone, le tri ne peut pa se faire.
+Pour les colones qui affiche un icone, le tri ne peut pas se faire sur un image.
 Par contre il es possible avant l'icone ou le lien sur l'icone d'ajuer un text invisible.
-exeple d'une colonne qui affiche status avec une icone "actif/inactif" et un lien permettant de changer le status.
-Noter l'ajout de la balise <p> avec la valeur numérique invisible, mais qui permettra le tri sur cette valeur.
+exemple d'une colonne qui affiche status avec une icone "actif/inactif" et un lien permettant de changer le status.
+Noter l'ajout de la balise <p style='visibility:hidden;'><{$slide.actif}></p> avec la valeur numérique , qui permettra le tri sur cette valeur.
 Il est possible d'utiliser plutôt un texte
 ----------------------------------------------
     <td class='center'>
@@ -68,4 +76,4 @@ Il est possible d'utiliser plutôt un texte
 ----------------------------------------------
 
 contact : jjdelalandre@orane.fr
-site : http://jubile.fr
+site    : http://jubile.fr
