@@ -15,46 +15,53 @@
  licence : GPL
 */
 
-var optionsTTH = {
+var tth_options = {
  'arrows' : new Array("updown_off.png", "up_on.png", "down_on.png", "blank.png", "up_off.png", "down_off.png"),
  'imgFld' : "trierTableauHTML/images/",
  'skin' : "skin-arrow-blue-round", //dossier des icones dans le frameworks
  'localLang' : "fr",
  'posImg' : "right", //position de l'icone, right or left
  'asc' : true, //defini le sens de tri des colonnes par défaut
- 'last_asc' : false, // si true change 'asc' à chaque changement de sens
- 'typeContent' : 0 //utilisé pendant le dev
+ 'last_asc' : false, // change 'asc' à chaque changement de sens dans une même colonne
+ 'typeContent' : 0 ,//utilisé pendant le dev
+ 'isFirstTH' : true //utilisé pour déterminer si on est sur la premigne TH
 };
  
-var ico_blank    = optionsTTH['arrows'].indexOf('blank.png');
-var ico_up_on    = optionsTTH['arrows'].indexOf('up_on.png');
-var ico_up_off   = optionsTTH['arrows'].indexOf('up_off.png');
-var ico_down_on  = optionsTTH['arrows'].indexOf('down_on.png');
-var ico_down_off = optionsTTH['arrows'].indexOf('down_off.png');
+var ico_blank    = tth_options['arrows'].indexOf('blank.png');
+var ico_up_on    = tth_options['arrows'].indexOf('up_on.png');
+var ico_up_off   = tth_options['arrows'].indexOf('up_off.png');
+var ico_down_on  = tth_options['arrows'].indexOf('down_on.png');
+var ico_down_off = tth_options['arrows'].indexOf('down_off.png');
  
  
 
 /* ***********************************************************
 
 ************************************************************** */
-function init_TrierTableauHTML(options = null){
+function tth_set_value(cle, new_value){
+    tth_options[cle] = new_value;
+}
+/* ***********************************************************
+
+************************************************************** */
+function tth_init(options = null){
 if (options != null)
     for (var cle in options) {
-        optionsTTH[cle] = options[cle];
+        tth_options[cle] = options[cle];
     }
     
     
 }
 // exemple d'initalisation des options
-//init_TrierTableauHTML({ "posImg" : 'left', "skin" : 'skin-arrow-green', "asc" : false});
+//tth_init_({ "posImg" : 'left', "skin" : 'skin-arrow-green', "asc" : false});
 
 /* ***********************************************************
 
 ************************************************************** */
-function isValidDate(d) {
+function tth_isValidDate(d) {
   //d="2121-05-12";
   d2 = d.replace(/\-/gi,"/");
-  if (optionsTTH['localLang'] == "fr"){
+  if (tth_options['localLang'] == "fr"){
     t1 = d2.split(" ");
     t2 = t1[0].split("/");
     var j = t2[0];
@@ -73,28 +80,28 @@ function isValidDate(d) {
 /* ***********************************************************
 
 ************************************************************** */
-const compare = function(ids, asc){
+const tth_compare = function(ids, asc){
   return function(row1, row2){
     const tdValue = function(row, ids){
       return row.children[ids].textContent;
     }
     const tri = function(v1, v2){
       if (v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2)){
-        optionsTTH['typeContent'] = 1
+        tth_options['typeContent'] = 1
         return v1 - v2;
       }
       
-      else if(isValidDate(v1)>0 || isValidDate(v2)>0) {
-        optionsTTH['typeContent'] = 3;
-        return isValidDate(v1) - isValidDate(v2);       
+      else if(tth_isValidDate(v1)>0 || tth_isValidDate(v2)>0) {
+        tth_options['typeContent'] = 3;
+        return tth_isValidDate(v1) - tth_isValidDate(v2);       
        }   
       
       
       else {
-        optionsTTH['typeContent'] = 2
-        return v1.toString().localeCompare(v2, optionsTTH['localLang'], {ignorePunctuation: true});
+        tth_options['typeContent'] = 2
+        return v1.toString().localeCompare(v2, tth_options['localLang'], {ignorePunctuation: true});
       }
-      return v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2, optionsTTH['localLang'], {ignorePunctuation: true});
+      return v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2, tth_options['localLang'], {ignorePunctuation: true});
     };
     return tri(tdValue(asc ? row1 : row2, ids), tdValue(asc ? row2 : row1, ids));
   }
@@ -103,11 +110,11 @@ const compare = function(ids, asc){
 /* ***********************************************************
 
 ************************************************************** */
-function getNewImg2Sort(index){
+function tth_getNewImg2Sort(index){
     var oImg = document.createElement('img');
-    oImg.src = optionsTTH['imgSkin'] + optionsTTH['arrows'][index];
-    oImg.style.styleFloat = optionsTTH['posImg'];
-    oImg.style.cssFloat = optionsTTH['posImg'];
+    oImg.src = tth_options['imgSkin'] + tth_options['arrows'][index];
+    oImg.style.styleFloat = tth_options['posImg'];
+    oImg.style.cssFloat = tth_options['posImg'];
     oImg.style.cursor = 'pointer';
     return oImg;
 }
@@ -116,7 +123,7 @@ function getNewImg2Sort(index){
 /* ***********************************************************
 
 ************************************************************** */
-var getScriptURL = (function() {
+var tth_getScriptURL = (function() {
     var scripts = document.getElementsByTagName('script');
     var index = scripts.length - 1;
     var myScript = scripts[index];
@@ -130,12 +137,12 @@ var getScriptURL = (function() {
 /* ***********************************************************
 
 ************************************************************** */
-function trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = ""){ //defautSenseOfSort = 0
+function tth_trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = ""){ //defautSenseOfSort = 0
     //calcul du chemin des icones
     if(sRoot == ''){
-        optionsTTH['imgSkin']= getScriptURL() + "images/" + optionsTTH['skin'] + "/";
+        tth_options['imgSkin']= tth_getScriptURL() + "images/" + tth_options['skin'] + "/";
     }else{
-        optionsTTH['imgSkin'] = sRoot + "/" + optionsTTH['imgFld'] + optionsTTH['skin'] + "/";
+        tth_options['imgSkin'] = sRoot + "/" + tth_options['imgFld'] + tth_options['skin'] + "/";
     }
 
   const obTable = document.getElementById(idTbl);
@@ -144,62 +151,78 @@ function trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = ""){ //
   const trxb = tbody.querySelectorAll('tr');
 
   var lCol = 0;
-  optionsTTH['oldTH'] = -1;
-  optionsTTH['current_asc'] = optionsTTH['asc'];
+  tth_options['current_asc'] = tth_options['asc'];
   
   //-----------------------------------------  
-  //parcours des colonnes et affectaion de l'evennement click
+  //parcours des colonnes et affectation de l'evennement click
   thx.forEach(function(th){
 
-//var tCols2sort = new Array(2,3);
+  //remplace le sépaateur par |
   cols2sort = cols2sort.replace(/\-/gi,"|").replace(/\,/gi,"|").replace(/\;/gi,"|").replace(/\//gi,"|");
-  //cols2sort = cols2sort.replace(/\-/gi,"/");
-var tCols2sort = cols2sort.split('|');
-var allCols = (cols2sort == "");
-//alert(tCols2sort[0] + "|" + lCol);
-  lCol ++;
-  th.style.cursor = 'pointer';
-  if (defautCol2sort == lCol) th2sort = th;
-  if (tCols2sort.find(element => element == lCol)  !== undefined || allCols)   
+  var tCols2sort = cols2sort.split('|');
+
+  var allCols = (cols2sort == ""); //toutes les colonnes si cols2sort est vide
+//alert(tCols2sort[0] + "|" + tth_options['old_th']);
+  tth_options['old_th'] = Array.from(thx).indexOf(th) + 1;
+  th.style.cursor = 'pointer';  //affichge d'un curseur sur le titre des colonnes
+  if (defautCol2sort == tth_options['old_th']) th2sort = th; // met de côté la colonne de tri par défaut
+  //initialise les colonnes de tri et leur affecte l'evennement "click()"
+  if (tCols2sort.find(element => element == tth_options['old_th'] )  !== undefined || allCols)   
   {
-    th.appendChild( getNewImg2Sort(ico_blank));
-    th.appendChild( getNewImg2Sort(ico_blank));
-    th.appendChild( getNewImg2Sort(ico_blank));
 
-    //-----------------------------------------------------------    
-    //evennement ajouté à chaque colonne
-    th.addEventListener('click', function(){
-     newIndexOfTH = Array.from(thx).indexOf(th);
+      th.appendChild( tth_getNewImg2Sort(ico_blank)); //icone transparent avant pour laisser un espace
+      th.appendChild( tth_getNewImg2Sort(ico_blank)); //icone utilise pour afficher les flèches qui indiquent le sens de tri
+      th.appendChild( tth_getNewImg2Sort(ico_blank)); //icone transparent avant pour laisser un espace
+      //this.asc = tth_options['asc'];
+      //===========================================================    
+      //evennement ajouté à chaque colonne de tri
+      //===========================================================    
+      th.addEventListener('click', function(){
+      newIndexOfTH = Array.from(thx).indexOf(th)+1;
 
-      //affecte l'image up_off ou down_off aux colonnes de tri uniquement  
-      if(optionsTTH['last_asc']){
-        this.asc  = (newIndexOfTH == optionsTTH['old_th']) ? !this.asc  : this.asc;   
-        img = (this.asc) ? optionsTTH['arrows'][ico_down_off] : optionsTTH['arrows'][ico_up_off] ;         
+      //détermine l'image up_off ou down_off aux colonnes de tri uniquement  
+      
+      if(tth_options['last_asc'] && !tth_options['isFirstTH']){ //cas a revoir
+        if(newIndexOfTH == tth_options['old_th']){
+          this.asc = (newIndexOfTH == tth_options['old_th']) ? !this.asc : this.asc;   
+          img = (this.asc) ? tth_options['arrows'][ico_down_off] : tth_options['arrows'][ico_up_off];    
+          tth_options['asc'] = !tth_options['asc'];    
+          //alert('meme colonne');
+        }else{
+          this.asc = (newIndexOfTH == tth_options['old_th']) ? !this.asc : tth_options['asc'];   
+          img = (tth_options['asc']) ? tth_options['arrows'][ico_down_off] : tth_options['arrows'][ico_up_off];  
+          //alert('colonne differente');
+        }
       }else{
-        this.asc  = (newIndexOfTH == optionsTTH['old_th']) ? !this.asc  : optionsTTH['asc'];   
-        img = (optionsTTH['asc']) ? optionsTTH['arrows'][ico_down_off] : optionsTTH['arrows'][ico_up_off] ;  
+        this.asc = (newIndexOfTH == tth_options['old_th']) ? !this.asc : tth_options['asc'];   
+        img = (tth_options['asc']) ? tth_options['arrows'][ico_down_off] : tth_options['arrows'][ico_up_off];  
+        tth_options['isFirstTH'] = false;
+        //alert("isFirstTH");
       }  
       
+      //affecte l'icone gris à tutes les colonnes y compris celle cliquée
       thx.forEach(function(th){
         if(th.getElementsByTagName("img").length > 0){
           oImg = th.getElementsByTagName("img")[1];         
-          oImg.src = optionsTTH['imgSkin'] + img;
+          oImg.src = tth_options['imgSkin'] + img;
         }
       })
-     //-----------------------------------------
-    
-      let classe = Array.from(trxb).sort(compare(Array.from(thx).indexOf(th), this.asc  ));
-      img = (this.asc) ? optionsTTH['arrows'][ico_down_on] : optionsTTH['arrows'][ico_up_on] ;         
+      //-----------------------------------------
+      //trTries stocke les références des lignes triées  
+      let trTries = Array.from(trxb).sort(tth_compare(Array.from(thx).indexOf(th), this.asc));
+      img = (this.asc) ? tth_options['arrows'][ico_down_on] : tth_options['arrows'][ico_up_on] ;         
       oImg = th.getElementsByTagName("img")[1];         
-      oImg.src = optionsTTH['imgSkin'] + img;
-
-      optionsTTH['old_th'] = newIndexOfTH;
-
-      //-------------------------------------------------
-        
-      classe.forEach(function(tr){
+      oImg.src = tth_options['imgSkin'] + img;
+      
+      //déplace les lignes du tableau dans l'ordre de tri  
+      trTries.forEach(function(tr){
          tbody.appendChild(tr)
       });
+      
+      //-------------------------------------------------
+      // colonne mise de coté pour vérifier au prochain clique si on est toujours sur la m^me colonne  
+      tth_options['old_th'] = newIndexOfTH;
+
     })
   }
   });

@@ -1,73 +1,101 @@
-Installation trierTableauHTML v 02 :
-------------------------------------
-Copier le dossier complet dans le répertoire "Frameworks"
+framework "trierTableauHTML" v 02 
+contact : jjdelalandre@orane.fr
+site    : http://jubile.fr
+===============================================================================
+installation:
+-------------
+L'installationde ce script est décrite pour le CMS Xoops,
+cependant il peux être utilisé avec d'autres environnement, en modifiant notamment l'inclusion du script.
+Copier le dossier complet "trierTableauHTML" dans le répertoire "Frameworks"
+Ne pas changer le nom du dossier
 
+===============================================================================
 Utilisation :
 ------------
-Ajouter le script dans la page html
+- Ajouter le script dans la page html
 $xoTheme->addScript(XOOPS_URL . '/Frameworks/trierTableauHTML/trierTableau.js');
 
-à la fin du tableau HTML ajouter un appel à la fonction "trierTableau".
-exemple : 
+- Definisser l'id du tableau html
+- À la fin du tableau HTML ajouter un appel à la fonction "trierTableau".
+
+Exemple 1: 
 ---------------------------------------------
+<table  id="slides_list"  name="slides_list" class='table table-bordered'>
+
+</tabble
+
 <script>
-trierTableau('slides_list', 2, '1|2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
+tth_trierTableau('slides_list', 2, '1|2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
 </script>
 ---------------------------------------------
-prototype de la fontion:
-function trierTableau(idTbl, [defautCol2sort = 0], [cols2sort = ""], [sRoot = ""]){}
+Prototype de la fonction:
+function tth_trierTableau(idTbl, [defautCol2sort = 0], [cols2sort = ""], [sRoot = ""]){}
 
 idTbl : slides_list est l'id du tableau html
 
-defautCol2sort : indique la colonne de tri (défaut : 0).
-     la première conone est la n° 1
+defautCol2sort : indique la colonne de tri par défaut (défaut : 0).
+     La première colonne est la n° 1
      Mettre 0 pour garder le tri initial
 
-cols2sort : Liste des colonnes ou l'on pourra trier. 
-     une chaine vide mettra toute les colonnes triables
-     la premère colonne est la n° 1
-     Separateurs utilisables : | - , ; /
+cols2sort : Liste des colonnes que l'on pourra trier. 
+     Une chaine vide mettra toute les colonnes de tri.
+     La première colonne est la n° 1
+     Séparateurs utilisables : | - , ; /
 
-sRoot : chemin URL ou se trouve le framework.
-     laisser vide pour Xoops
-     par defaut http://monsite/Frameworks
-     utilisé par les images ajoutées au titre des colonnes.
+sRoot : chemin URL ou se trouve le dossirt trierTableauHTML.
+     Laisser vide pour Xoops
+     Par défaut http://monsite/Frameworks
+     Utilisé par les images ajoutées au titre des colonnes.
 
 
-            
-il es possible d'initialiser certaines option en ajoutant un appel à la fonction "init_TrierTableauHTML" avant l'appel a trierTableau
-exemple :
+===============================================================================            
+il est possible d'initialiser certaines option en ajoutant un appel à la fonction "tth_init" ou "tth_set_value" avant l'appel à "tth_trierTableau"
+Exemple 2:
 ---------------------------------------------
 <script>
-init_TrierTableauHTML({ "posImg" : 'left', "skin" : 'skin-arrow-green', "asc" : false});
-trierTableau('slides_list', 2, '1|2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
+tth_init({ "posImg" : 'left', "skin" : 'skin-arrow-green', "asc" : false});
+tth_trierTableau('slides_list', 2, '2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
+</script>
+---------------------------------------------
+
+Exemple 3:
+---------------------------------------------
+<script>
+tth_set_value("cle", new_value){
+tth_trierTableau('slides_list', 2, '2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
 </script>
 ---------------------------------------------
 
 liste des options possibles à passer dans le tableau
 ------------------------------------------------------
-"posImg"    : 'left' ou 'right',
+"posImg"    : 'left' ou 'right' affiche les icones qui indiquent le sens du tri à gauche ou à droite du titre,
 "skin"      : nom du dossier de skin, voir les skins dans le dossier images du frameworks
-"asc"       : bollean, indique le sens de tri par défaut;
+"asc"       : boollean, indique le sens de tri par défaut;
+"last_asc"  : false : l'ordre de tri des colonnes inactives restent toujours le même selon "asc"
+              true  : l'ordre de tri change à chaque clique sur la même colonne et prend la dernier actif.
 'localLang' : valeur par défaut = "fr". Défini le type de tri pour les chaine et les dates.
 
 
+
+===============================================================================
 Astuces :
--------------------
-Pour les colones qui affiche un icone, le tri ne peut pas se faire sur un image.
-Par contre il es possible avant l'icone ou le lien sur l'icone d'ajuer un text invisible.
+---------
+Pour les colones qui affichent une icone, le tri ne peut pas se faire sur un image.
+Par contre il est possible avant l'icone ou le lien sur l'icone d'ajouter un texte ou une valeur numérique invisible.
 exemple d'une colonne qui affiche status avec une icone "actif/inactif" et un lien permettant de changer le status.
-Noter l'ajout de la balise <p style='visibility:hidden;'><{$slide.actif}></p> avec la valeur numérique , qui permettra le tri sur cette valeur.
-Il est possible d'utiliser plutôt un texte
+Noter l'ajout de la balise <span style='visibility:hidden;'><{$slide.actif}></span> avec la valeur numérique , qui permettra le tri sur cette valeur.
 ----------------------------------------------
     <td class='center'>
-        <p style='visibility:hidden;'><{$slide.actif}></p>
+        <{* texte invisible pour le tri *}>
+        <span style='visibility:hidden;'><{$slide.actif}></span>
     
         <{if $slide.actif == 1}>
+            <{* Enregistrements actifs *}>
             <a href="slides.php?op=bascule_actif&sld_id=<{$slide.id}>&value=0&sld_theme=<{$slide.theme}>">
             <img src="<{$sysPathIcon16}>/on.png" title="<{$smarty.const._AM_SLIDER_DESACTIVATE}>">
             </a>
         <{else}>
+            <{* Enregistrements inactifs *}>
             <a href="slides.php?op=bascule_actif&sld_id=<{$slide.id}>&value=1&sld_theme=<{$slide.theme}>">
             <img src="<{$sysPathIcon16}>/off.png" title="<{$smarty.const._AM_SLIDER_ACTIVATE}>">
             </a>
@@ -75,5 +103,3 @@ Il est possible d'utiliser plutôt un texte
     </td>
 ----------------------------------------------
 
-contact : jjdelalandre@orane.fr
-site    : http://jubile.fr

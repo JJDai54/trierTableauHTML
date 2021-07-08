@@ -12,11 +12,12 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 _trierTableauHTML
 	+trierTableauHTML
-		-images
+		+images
 			-chiffres_Garamond
 				images\chiffres_Garamond\chiffre_0.gif
 				images\chiffres_Garamond\chiffre_1.gif
@@ -77,12 +78,16 @@ _trierTableauHTML
 [Open project files]
 0=trierTableau.js
 1=help.txt
+2=..\..\..\..\..\copie_module_to_ghitHub.bat
 [Selected Project Files]
 Main=
-Selected=help.txt
+Selected=..\..\..\..\..\copie_module_to_ghitHub.bat
 [trierTableau.js]
-TopLine=105
-Caret=1,133
+TopLine=23
+Caret=1,41
 [help.txt]
-TopLine=27
-Caret=8,79
+TopLine=1
+Caret=9,27
+[..\..\..\..\..\copie_module_to_ghitHub.bat]
+TopLine=11
+Caret=20,38
