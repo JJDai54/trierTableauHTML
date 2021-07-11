@@ -19,6 +19,7 @@ var tth_options = {
  'arrows' : new Array("updown_off.png", "up_on.png", "down_on.png", "blank.png", "up_off.png", "down_off.png"),
  'imgFld' : "trierTableauHTML/images/",
  'skin' : "skin-arrow-blue-round", //dossier des icones dans le frameworks
+ 'margin' : "0px 4px 0px 4px",  
  'localLang' : "fr",
  'posImg' : "right", //position de l'icone, right or left
  'asc' : true, //defini le sens de tri des colonnes par défaut
@@ -116,6 +117,7 @@ function tth_getNewImg2Sort(index){
     oImg.style.styleFloat = tth_options['posImg'];
     oImg.style.cssFloat = tth_options['posImg'];
     oImg.style.cursor = 'pointer';
+    oImg.style.margin = tth_options['margin'];
     return oImg;
 }
 
@@ -171,8 +173,6 @@ function tth_trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = "")
   {
 
       th.appendChild( tth_getNewImg2Sort(ico_blank)); //icone transparent avant pour laisser un espace
-      th.appendChild( tth_getNewImg2Sort(ico_blank)); //icone utilise pour afficher les flèches qui indiquent le sens de tri
-      th.appendChild( tth_getNewImg2Sort(ico_blank)); //icone transparent avant pour laisser un espace
       //this.asc = tth_options['asc'];
       //===========================================================    
       //evennement ajouté à chaque colonne de tri
@@ -203,7 +203,7 @@ function tth_trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = "")
       //affecte l'icone gris à tutes les colonnes y compris celle cliquée
       thx.forEach(function(th){
         if(th.getElementsByTagName("img").length > 0){
-          oImg = th.getElementsByTagName("img")[1];         
+          oImg = th.getElementsByTagName("img")[0];         
           oImg.src = tth_options['imgSkin'] + img;
         }
       })
@@ -211,7 +211,7 @@ function tth_trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = "")
       //trTries stocke les références des lignes triées  
       let trTries = Array.from(trxb).sort(tth_compare(Array.from(thx).indexOf(th), this.asc));
       img = (this.asc) ? tth_options['arrows'][ico_down_on] : tth_options['arrows'][ico_up_on] ;         
-      oImg = th.getElementsByTagName("img")[1];         
+      oImg = th.getElementsByTagName("img")[0];         
       oImg.src = tth_options['imgSkin'] + img;
       
       //déplace les lignes du tableau dans l'ordre de tri  

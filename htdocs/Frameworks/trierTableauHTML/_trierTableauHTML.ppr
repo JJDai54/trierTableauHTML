@@ -78,16 +78,12 @@ _trierTableauHTML
 [Open project files]
 0=trierTableau.js
 1=help.txt
-2=..\..\..\..\..\copie_module_to_ghitHub.bat
 [Selected Project Files]
 Main=
-Selected=..\..\..\..\..\copie_module_to_ghitHub.bat
+Selected=trierTableau.js
 [trierTableau.js]
-TopLine=23
-Caret=1,41
+TopLine=138
+Caret=1,175
 [help.txt]
-TopLine=1
-Caret=9,27
-[..\..\..\..\..\copie_module_to_ghitHub.bat]
-TopLine=11
-Caret=20,38
+TopLine=59
+Caret=10,80

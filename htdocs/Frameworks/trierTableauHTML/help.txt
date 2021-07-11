@@ -16,16 +16,30 @@ Utilisation :
 $xoTheme->addScript(XOOPS_URL . '/Frameworks/trierTableauHTML/trierTableau.js');
 
 - Definisser l'id du tableau html
+- definisser les titre de la table avec la balise "<th>"
+- encadrer les lignes de titres avec la balise "<thead>"
 - À la fin du tableau HTML ajouter un appel à la fonction "trierTableau".
 
 Exemple 1: 
 ---------------------------------------------
 <table  id="slides_list"  name="slides_list" class='table table-bordered'>
+<thead>
+    <tr>
+        <th>Titre 1</th>
+        <th>Titre 2</th>
+        <th>Titre 3</th>
+    </tr>
+</thead>
 
-</tabble
+    <tr>
+        <td>Valeur 1</td>
+        <td>Valeur 2</td>
+        <td>Valeur 3</td>
+    </tr>
+</table
 
 <script>
-tth_trierTableau('slides_list', 2, '1|2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Frameworks');  
+tth_trierTableau('slides_list', 2, '1|2|3');  
 </script>
 ---------------------------------------------
 Prototype de la fonction:
@@ -66,7 +80,7 @@ tth_trierTableau('slides_list', 2, '2|3|4|8|9', '<{$smarty.const.XOOPS_URL}>/Fra
 </script>
 ---------------------------------------------
 
-liste des options possibles à passer dans le tableau
+liste des options possibles à passer dans le tableaude la fonction "tth_init" ou avec la fonction "tth_set_value"
 ------------------------------------------------------
 "posImg"    : 'left' ou 'right' affiche les icones qui indiquent le sens du tri à gauche ou à droite du titre,
 "skin"      : nom du dossier de skin, voir les skins dans le dossier images du frameworks
@@ -74,8 +88,7 @@ liste des options possibles à passer dans le tableau
 "last_asc"  : false : l'ordre de tri des colonnes inactives restent toujours le même selon "asc"
               true  : l'ordre de tri change à chaque clique sur la même colonne et prend la dernier actif.
 'localLang' : valeur par défaut = "fr". Défini le type de tri pour les chaine et les dates.
-
-
+'margin'    : marges de l'icones sous la forme "0px 4px 0px 4px". valeur par défaut : "0px 4px 0px 4px".
 
 ===============================================================================
 Astuces :
