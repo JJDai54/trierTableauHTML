@@ -5,6 +5,7 @@ Compilator.CompileOnBackground=0
 Compilator.ProgSaveAll=0
 Compilator.ProgRunSelection=0
 Compilator.LogType=0
+Compilator.LogEncoding=0
 DefaultDir=J:\Xoops\modules-JJD\trierTableauHTML\Projet\htdocs\Frameworks\trierTableauHTML
 DefaultCP=0
 LogtoEnd=1
@@ -82,8 +83,8 @@ _trierTableauHTML
 Main=
 Selected=trierTableau.js
 [trierTableau.js]
-TopLine=138
-Caret=1,175
+TopLine=1
+Caret=35,14
 [help.txt]
 TopLine=59
 Caret=10,80

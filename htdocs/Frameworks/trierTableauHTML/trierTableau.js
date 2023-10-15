@@ -8,10 +8,10 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  --------------------------------------------------------
  auteur : JJ Delalandre - jjdelalandre@orange.fr
- site : http:jubile.fr
- version : 2.0
+ site : https://github.com/JJDai54
+ version : 2.2
  date de creatiion : 01-06-2021
- date de modification : 04-07-2021
+ date de modification : 15-10-2023
  licence : GPL
 */
 
@@ -140,6 +140,8 @@ var tth_getScriptURL = (function() {
 
 ************************************************************** */
 function tth_trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = ""){ //defautSenseOfSort = 0
+   //si negatif generera un 2eme click pour inverser l'ordre
+   var  defautCol2sortAbs = Math.abs(defautCol2sort);
     //calcul du chemin des icones
     if(sRoot == ''){
         tth_options['imgSkin']= tth_getScriptURL() + "images/" + tth_options['skin'] + "/";
@@ -167,7 +169,7 @@ function tth_trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = "")
 //alert(tCols2sort[0] + "|" + tth_options['old_th']);
   tth_options['old_th'] = Array.from(thx).indexOf(th) + 1;
   th.style.cursor = 'pointer';  //affichge d'un curseur sur le titre des colonnes
-  if (defautCol2sort == tth_options['old_th']) th2sort = th; // met de côté la colonne de tri par défaut
+  if (defautCol2sortAbs == tth_options['old_th']) th2sort = th; // met de côté la colonne de tri par défaut
   //initialise les colonnes de tri et leur affecte l'evennement "click()"
   if (tCols2sort.find(element => element == tth_options['old_th'] )  !== undefined || allCols)   
   {
@@ -226,6 +228,10 @@ function tth_trierTableau(idTbl, defautCol2sort = 0, cols2sort = "", sRoot = "")
     })
   }
   });
-if (th2sort) th2sort.click();
+if (th2sort) {
+    th2sort.click();
+    if (defautCol2sort < 0) th2sort.click(); //pour inverser l'ordre si la colonne par defaut est négative
+}
+
 }
 
